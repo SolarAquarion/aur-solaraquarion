@@ -1,11 +1,11 @@
 # Maintainer: Solomon Choina <shlomochoina@gmail.com>
 pkgname=vera-xsettings-git
-_pkgname-vera-xsettings
+_pkgname=vera-xsettings
 pkgver=
 pkgrel=1
 epoch=
 pkgdesc="a reference of the xsettings spec made for vera-desktop-environment"
-arch=(x86_64' 'i686')
+arch=('x86_64' 'i686')
 url="https://github.com/vera-desktop/vera-xsettings"
 license=('GPL2.1')
 depends=(vala)
@@ -16,16 +16,16 @@ conflicts=()
 replaces=()
 backup=()
 options=()
-source=(vera-xsettings::git+https://github.com/vera-desktop/vera-xsettings.git)
+source=(vera-xsettings::git+https://github.com/vera-desktop/vera-xsettings.git#branch=debian)
 sha256sums=()
 
 pkgver() {
   cd "$_pkgname"
-  git describe --long | sed 's/\([^-]*-g\)/r\1/;s/-/./g'
+  echo "1.0.2.r$(git rev-list --count master).g$(git log -1 --format="%h")"
   }
 build() {
     cd "vera-xsettings"
-    bake
+    bake --configure install-directory="$pkgdir/"
 }
 
 package() {
